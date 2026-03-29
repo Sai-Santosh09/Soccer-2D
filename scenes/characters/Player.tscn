@@ -104,6 +104,7 @@ radius = 4.0
 height = 18.0
 
 [node name="Player" type="CharacterBody2D" unique_id=49003736]
+collision_layer = 2
 script = ExtResource("1_gin2a")
 
 [node name="PlayerSprite" type="Sprite2D" parent="." unique_id=435058908]

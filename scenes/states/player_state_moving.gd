@@ -1,9 +1,6 @@
 class_name PlayerStateMoving extends PlayerState
 
 
-
-
-
 func _process(_delta: float) -> void:
 	if player.control_scheme == Player.ControlScheme.CPU:
 		pass

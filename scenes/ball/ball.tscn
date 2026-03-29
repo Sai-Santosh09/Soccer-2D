@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://bv5lrexexhrgn"]
+
+[ext_resource type="Texture2D" uid="uid://cxqh7jene5fst" path="res://assets/art/props/soccer-ball.png" id="1_nv6q1"]
+[ext_resource type="Script" uid="uid://ceael501rs2ro" path="res://scenes/ball/scripts/ball.gd" id="1_stoaj"]
+[ext_resource type="Texture2D" uid="uid://bkg1oimg7fr58" path="res://assets/art/props/ball-shadow.png" id="2_stoaj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xotqv"]
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_jbgth"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BallSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yjhvv"]
+resource_name = "idle"
+length = 0.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BallSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_a81tc"]
+resource_name = "roll"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BallSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r8c1m"]
+_data = {
+&"RESET": SubResource("Animation_jbgth"),
+&"idle": SubResource("Animation_yjhvv"),
+&"roll": SubResource("Animation_a81tc")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rp1mh"]
+radius = 4.0
+
+[node name="Ball" type="AnimatableBody2D" unique_id=1031099531]
+collision_layer = 4
+script = ExtResource("1_stoaj")
+
+[node name="BallSprite" type="Sprite2D" parent="." unique_id=1882387387]
+texture = ExtResource("1_nv6q1")
+centered = false
+offset = Vector2(-5, -10)
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=611580512]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_xotqv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1359775052]
+libraries/ = SubResource("AnimationLibrary_r8c1m")
+autoplay = &"idle"
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=64575690]
+texture = ExtResource("2_stoaj")
+centered = false
+offset = Vector2(-8, -16)
+
+[node name="PlayerDetection" type="Area2D" parent="." unique_id=1487416275]
+unique_name_in_owner = true
+position = Vector2(0, -5)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetection" unique_id=18668028]
+shape = SubResource("CircleShape2D_rp1mh")
