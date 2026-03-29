@@ -13,26 +13,28 @@ enum State {MOVING, TACKLING}
 
 
 var Left_or_Right := Vector2.RIGHT
-var state := State.MOVING
-var time_start_tackle := Time.get_ticks_msec()
+var current_state : PlayerState = null
+var state_factory := PlayerStateFactory.new()
+
+
+func _ready() -> void:
+	switch_states(State.MOVING)
+
 
 func _process( _delta : float ) -> void:
-	if control_scheme == ControlScheme.CPU:
-		pass
-	else:
-		if state == State.MOVING:
-			handle_human_movement()
-			if velocity != Vector2.ZERO and KeyUtil.is_action_just_pressed(control_scheme, KeyUtil.Action.SHOOT):
-				state = State.TACKLING
-				time_start_tackle = Time.get_ticks_msec()
-			set_movement_animation()
-		elif state == State.TACKLING:
-			animation_player.play("tackle")
-			if Time.get_ticks_msec() - time_start_tackle > DURATION_TACKLE:
-				state = State.MOVING
-	set_Left_or_Right()
 	flip_sprite()
 	move_and_slide()
+
+
+func switch_states( state : State ) -> void:
+	if current_state != null:
+		current_state.queue_free()
+	current_state = state_factory.get_fresh_state(state)
+	current_state.setup(self, animation_player)
+	current_state.state_transition_requested.connect(switch_states.bind())
+	current_state.name = "PlayerStateMachine: " + str(state)
+	call_deferred("add_child", current_state)
+	 
 
 
 func set_movement_animation() -> void:
@@ -41,11 +43,6 @@ func set_movement_animation() -> void:
 	else:
 		animation_player.play("idle")
 	pass
-
-
-func handle_human_movement() -> void:
-	var direction := KeyUtil.get_input_vector(control_scheme)
-	velocity = direction * speed
 
 
 func set_Left_or_Right() -> void:
