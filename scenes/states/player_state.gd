@@ -15,8 +15,8 @@ func setup(context_player : Player,context_data : PlayerStateData, context_anima
 	ball = context_ball
 
 
-func transition_state( new_state : Player.State, state_date : PlayerStateData = PlayerStateData.new() ) -> void:
-	state_transition_requested.emit( new_state, state_date )
+func transition_state( new_state : Player.State, date : PlayerStateData = PlayerStateData.new() ) -> void:
+	state_transition_requested.emit( new_state, date )
 
 
 func on_animation_complete() -> void:

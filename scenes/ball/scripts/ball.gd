@@ -4,10 +4,12 @@ class_name Ball extends AnimatableBody2D
 enum State {CARRIED, FREE, SHOT}
 
 @onready var player_detection: Area2D = %PlayerDetection
+@onready var ball_sprite: Sprite2D = $BallSprite
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var carrier : Player = null
 var current_state : BallState = null
+var height := 0.0
 var state_factory := BallStateFactory.new()
 var velocity := Vector2.ZERO
 
@@ -16,11 +18,15 @@ func _ready() -> void:
 	switch_state(State.FREE)
 
 
+func _process(_delta: float) -> void:
+	ball_sprite.position = Vector2.UP * height
+
+
 func switch_state( state : Ball.State ) -> void:
 	if current_state != null:
 		current_state.queue_free()
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self , player_detection, carrier, animation_player)
+	current_state.setup(self , player_detection, carrier, animation_player, ball_sprite)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name = "BallStateMachine"
 	call_deferred("add_child", current_state)
