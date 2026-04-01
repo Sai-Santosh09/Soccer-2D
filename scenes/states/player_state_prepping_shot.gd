@@ -19,4 +19,4 @@ func _process(delta: float) -> void:
 		var bonus := ease(ease_time, EASE_REWARD_FACTOR)
 		var shot_power := player.power * (1 + bonus)
 		shot_direction = shot_direction.normalized()
-		print(shot_power, shot_direction)
+		state_transition_requested.emit(Player.State.SHOOTING, shot_power, shot_direction)

@@ -63,3 +63,8 @@ func flip_sprite() -> void:
 
 func has_ball() -> bool:
 	return ball.carrier == self
+
+
+func on_animation_complete() -> void:
+	if current_state != null:
+		current_state.on_animation_complete()
