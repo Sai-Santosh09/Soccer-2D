@@ -8,11 +8,11 @@ func _enter_tree() -> void:
 
 func on_animation_complete() -> void:
 	if player.control_scheme == Player.ControlScheme.CPU:
-		state_transition_requested.emit(Player.State.RECOVERING)
+		transition_state(Player.State.RECOVERING)
 	else:
-		state_transition_requested.emit(Player.State.MOVING)
+		transition_state(Player.State.MOVING)
 	shoot_ball()
 
 
 func shoot_ball() -> void:
-	print("shoot")
+	ball.shoot( state_data.shot_direction * state_data.shot_power )

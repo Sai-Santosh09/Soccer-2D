@@ -14,4 +14,3 @@ func _init() -> void:
 func get_fresh_state(state : Ball.State) -> BallState:
 	assert(states.has(state) , "state doesn't exist!")
 	return states.get(state).new()
-	
