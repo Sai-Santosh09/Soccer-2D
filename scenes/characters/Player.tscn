@@ -189,6 +189,8 @@ collision_mask = 2
 monitorable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TeammateDetectionArea" unique_id=1771468046]
+visible = false
+modulate = Color(18.892157, 0, 0, 0.19607843)
 polygon = PackedVector2Array(0, -40, 280, -150, 330, -100, 330, 100, 280, 150, 0, 40)
 
 [node name="ShadowSprite" type="Sprite2D" parent="." unique_id=299942889]
