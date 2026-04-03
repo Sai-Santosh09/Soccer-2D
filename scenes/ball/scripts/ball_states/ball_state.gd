@@ -21,10 +21,12 @@ func setup(context_ball : Ball, context_player_detection : Area2D, context_carri
 func set_ball_animation_from_velocity() -> void:
 	if ball.velocity == Vector2.ZERO:
 		animation_player.play("idle")
-	elif ball.velocity.x > 0:
-		animation_player.play("roll")
 	else:
-		animation_player.play_backwards("roll")
+		animation_player.play("roll")
+		if ball.velocity.x < 0:
+			animation_player.speed_scale = -1.0
+		else:
+			animation_player.speed_scale = 1.0
 
 
 func process_gravity(delta: float , bounciness : float = 0.0) -> void:
