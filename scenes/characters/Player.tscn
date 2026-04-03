@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bpegcko8pjbpp" path="res://scenes/characters/scripts/player.gd" id="1_gin2a"]
 [ext_resource type="Texture2D" uid="uid://dvqr77c4mcxk6" path="res://assets/art/characters/soccer-player.png" id="1_pq8s5"]
+[ext_resource type="Texture2D" uid="uid://c71hjc1134t5m" path="res://assets/art/props/1p.png" id="3_7wym0"]
+[ext_resource type="Texture2D" uid="uid://b4c58fekycewq" path="res://assets/art/characters/player-shadow.png" id="4_gj1sn"]
 
 [sub_resource type="Animation" id="Animation_gin2a"]
 length = 0.001
@@ -157,9 +159,7 @@ height = 18.0
 [node name="Player" type="CharacterBody2D" unique_id=49003736]
 collision_layer = 2
 script = ExtResource("1_gin2a")
-control_scheme = null
 power = 70.0
-speed = null
 
 [node name="PlayerSprite" type="Sprite2D" parent="." unique_id=435058908]
 texture = ExtResource("1_pq8s5")
@@ -167,6 +167,12 @@ centered = false
 offset = Vector2(-16, -32)
 hframes = 6
 vframes = 13
+
+[node name="ControlSprite" type="Sprite2D" parent="PlayerSprite" unique_id=1725724350]
+position = Vector2(0, -35)
+texture = ExtResource("3_7wym0")
+centered = false
+offset = Vector2(-7, -6)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1867448059]
 libraries/ = SubResource("AnimationLibrary_7wym0")
@@ -176,3 +182,16 @@ autoplay = &"idle"
 position = Vector2(0, -3)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_pq8s5")
+
+[node name="TeammateDetectionArea" type="Area2D" parent="." unique_id=939948241]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TeammateDetectionArea" unique_id=1771468046]
+polygon = PackedVector2Array(0, -40, 280, -150, 330, -100, 330, 100, 280, 150, 0, 40)
+
+[node name="ShadowSprite" type="Sprite2D" parent="." unique_id=299942889]
+texture = ExtResource("4_gj1sn")
+centered = false
+offset = Vector2(-8, -15)

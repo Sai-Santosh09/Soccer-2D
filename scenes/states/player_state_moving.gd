@@ -13,6 +13,11 @@ func _process(_delta: float) -> void:
 func handle_human_movement() -> void:
 	var direction := KeyUtil.get_input_vector(player.control_scheme)
 	player.velocity = direction * player.speed
+	if player.velocity != Vector2.ZERO:
+		teammate_detection_area.rotation = player.velocity.angle()
+	
+	if player.has_ball() and KeyUtil.is_action_just_pressed(player.control_scheme, KeyUtil.Action.PASS):
+		transition_state(Player.State.PASSING)
 	
 	if player.has_ball() and KeyUtil.is_action_just_pressed(player.control_scheme, KeyUtil.Action.SHOOT):
 		transition_state(Player.State.PREPPING_SHOT)
