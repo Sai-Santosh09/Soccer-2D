@@ -1,5 +1,7 @@
 class_name BallState extends Node
 
+const GRAVITY := 10.0
+
 signal state_transition_requested(new_state : BallState)
 
 var animation_player : AnimationPlayer
@@ -14,3 +16,23 @@ func setup(context_ball : Ball, context_player_detection : Area2D, context_carri
 	carrier = context_carrier
 	animation_player = context_animation_player
 	sprite = context_sprite
+
+
+func set_ball_animation_from_velocity() -> void:
+	if ball.velocity == Vector2.ZERO:
+		animation_player.play("idle")
+	elif ball.velocity.x > 0:
+		animation_player.play("roll")
+	else:
+		animation_player.play_backwards("roll")
+
+
+func process_gravity(delta: float , bounciness : float = 0.0) -> void:
+	if ball.height > 0 or ball.height_velocity > 0:
+		ball.height_velocity -= GRAVITY * delta
+		ball.height += ball.height_velocity
+		if ball.height < 0:
+			ball.height = 0
+			if bounciness > 0 and ball.height_velocity < 0:
+				ball.height_velocity = -ball.height_velocity * bounciness
+				ball.velocity *= bounciness

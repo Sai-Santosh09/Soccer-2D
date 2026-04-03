@@ -11,7 +11,7 @@ func _enter_tree() -> void:
 
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var time_factor = Time.get_ticks_msec() * 0.001
 	var bob_offset = sin( time_factor * BOB_SPEED) * BOB_AMOUNT
 	var sway_offset = 0.0
@@ -30,3 +30,4 @@ func _process(_delta: float) -> void:
 		ball.position = carrier.position + Vector2(carrier.Left_or_Right.x * OFFSET_FROM_PLAYER.x, OFFSET_FROM_PLAYER.y)
 		animation_player.play("idle")
 		animation_player.speed_scale = 1.0
+	process_gravity(delta)
