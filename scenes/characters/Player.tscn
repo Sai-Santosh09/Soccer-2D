@@ -159,7 +159,7 @@ height = 18.0
 [node name="Player" type="CharacterBody2D" unique_id=49003736]
 collision_layer = 2
 script = ExtResource("1_gin2a")
-power = 70.0
+power = 150.0
 
 [node name="PlayerSprite" type="Sprite2D" parent="." unique_id=435058908]
 texture = ExtResource("1_pq8s5")
