@@ -12,8 +12,10 @@ enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING , PASSING, HEA
 
 @export var ball : Ball
 @export var control_scheme : ControlScheme
+@export var own_goal : Goal
 @export var power : float
 @export var speed : float = 80.0
+@export var target_goal : Goal
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var control_sprite: Sprite2D = $PlayerSprite/ControlSprite
@@ -45,7 +47,7 @@ func switch_states( state : State, state_data : PlayerStateData = PlayerStateDat
 	if current_state != null:
 		current_state.queue_free()
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self , state_data, animation_player, ball , teammate_detection_area, ball_detection_area)
+	current_state.setup(self , state_data, animation_player, ball , teammate_detection_area, ball_detection_area, own_goal, target_goal)
 	current_state.state_transition_requested.connect(switch_states.bind())
 	current_state.name = "PlayerStateMachine: " + str(state)
 	call_deferred("add_child", current_state)
